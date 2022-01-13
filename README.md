@@ -429,6 +429,8 @@ for (vector<int>::iterator p=a.begin(); p!=a.end(); ++p)
 vector<int> b(a.begin(), a.end());  // b is copy of a
 vector<T> c(n, x);        // c[0]..c[n-1] init to x
 T d[10]; vector<T> e(d, d+10);      // e is initialized from d
+auto it = max_element(std::begin(cloud), std::end(cloud)); // C++11
+                          // Get the max element in vector
 ```
 
 ## `deque` (Array stack queue)
@@ -470,6 +472,9 @@ a["hello"] = 3;           // Add or replace element a["hello"]
 for (auto& p:a)
     cout << p.first << p.second;  // Prints hello, 3
 a.size();                 // 1
+if (m.find(key) == m.end()) // return true if key not present
+    return "Not Present";
+
 ```
 
 ## `set` (store unique elements - usually implemented as binary search trees - avg. time complexity: O(log n))
