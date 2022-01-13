@@ -312,15 +312,15 @@ x = make_shared<int>(12);   // Allocate value 12 on heap
 shared_ptr<int> y = x;      // Copy shared_ptr, implicit changes reference count to 2.
 cout << *y;                 // Dereference y to print '12'
 if (y.get() == x.get()) {   // Raw pointers (here x == y)
-    cout << "Same";  
-}  
+    cout << "Same";
+}
 y.reset();                  // Eliminate one owner of object
-if (y.get() != x.get()) { 
-    cout << "Different";  
-}  
+if (y.get() != x.get()) {
+    cout << "Different";
+}
 if (y == nullptr) {         // Can compare against nullptr (here returns true)
-    cout << "Empty";  
-}  
+    cout << "Empty";
+}
 y = make_shared<int>(15);   // Assign new value
 cout << *y;                 // Dereference x to print '15'
 cout << *x;                 // Dereference x to print '12'
@@ -407,6 +407,7 @@ s1.substr(m, n);          // Substring of size n starting at s1[m]
 s1.c_str();               // Convert to const char*
 s1 = to_string(12.05);    // Converts number to string
 getline(cin, s);          // Read line ending in '\n'
+sort(s1.begin(), s1.end())
 ```
 
 ## `vector` (Variable sized array/stack with built in memory allocation)
@@ -431,6 +432,7 @@ vector<T> c(n, x);        // c[0]..c[n-1] init to x
 T d[10]; vector<T> e(d, d+10);      // e is initialized from d
 auto it = max_element(std::begin(cloud), std::end(cloud)); // C++11
                           // Get the max element in vector
+vector<vector<int>> answer(r, vector<int> (c,0)); // Init 2D array
 ```
 
 ## `deque` (Array stack queue)
@@ -441,6 +443,26 @@ auto it = max_element(std::begin(cloud), std::end(cloud)); // C++11
 #include <deque>          // Include deque (std namespace)
 a.push_front(x);          // Puts x at a[0], shifts elements toward back
 a.pop_front();            // Removes a[0], shifts toward front
+```
+## `queue`
+
+```cpp
+#include <queue>          // Include queue (std namespace)
+a.push(x);                // Push Node into queue
+a.pop();                  // pop Node out of queue
+a.front();                // The front of the queue
+a.size();                 // The size of the queue
+a.empty();                // return true is queue is empty
+```
+## `stack`
+
+```cpp
+#include <stack>          // Include stack (std namespace)
+a.push(x);                // Push Node into stack
+a.pop();                  // pop Node out of stack
+a.top();                  // The top of the stack
+a.size();                 // The size of the stack
+a.empty();                // return true is stack is empty
 ```
 
 ## `utility` (pair)
@@ -474,6 +496,13 @@ for (auto& p:a)
 a.size();                 // 1
 if (m.find(key) == m.end()) // return true if key not present
     return "Not Present";
+
+unordered_map<int,int> mapp;
+unordered_map<int,int>::iterator it;
+for(int i = 0; i < nums.size();i++){
+    if(++mapp[nums[i]] > max) return nums[i];
+    cout<<"print out map"<<endl;
+    for(it = mapp.begin();it != mapp.end() ;it++)
 
 ```
 
@@ -516,7 +545,7 @@ reverse(a.begin(), a.end()); // Reverse vector or deque
 using namespace std::chrono; // Use namespace
 auto from =               // Get current time_point
   high_resolution_clock::now();
-// ... do some work       
+// ... do some work
 auto to =                 // Get current time_point
   high_resolution_clock::now();
 using ms =                // Define ms as floating point duration
@@ -529,7 +558,7 @@ cout << duration_cast<ms>(to - from)
 ## `thread` (Multi-threading library)
 ```cpp
 #include <thread>         // Include thread
-unsigned c = 
+unsigned c =
   hardware_concurrency(); // Hardware threads (or 0 for unknown)
 auto lambdaFn = [](){     // Lambda function used for thread body
     cout << "Hello multithreading";
@@ -545,15 +574,15 @@ const char* sharedMes              // Shared resource
 auto pingPongFn =                  // thread body (lambda). Print someone else's message
   [&](const char* mes){
     while (true){
-      unique_lock<mutex> lock(mut);// locks the mutex 
-      do {                
-        cond.wait(lock, [&](){     // wait for condition to be true (unlocks while waiting which allows other threads to modify)        
+      unique_lock<mutex> lock(mut);// locks the mutex
+      do {
+        cond.wait(lock, [&](){     // wait for condition to be true (unlocks while waiting which allows other threads to modify)
           return sharedMes != mes; // statement for when to continue
         });
       } while (sharedMes == mes);  // prevents spurious wakeup
       cout << sharedMes << endl;
-      sharedMes = mes;       
-      lock.unlock();               // no need to have lock on notify 
+      sharedMes = mes;
+      lock.unlock();               // no need to have lock on notify
       cond.notify_all();           // notify all condition has changed
     }
   };
@@ -571,11 +600,11 @@ function<int(int)> fib =  // Create lambda function
     if (i <= 1){
       return 1;
     }
-    return fib(i-1) 
+    return fib(i-1)
          + fib(i-2);
   };
 future<int> fut =         // result of async function
   async(launch::async, fib, 4); // start async function in other thread
-// do some other work 
+// do some other work
 cout << fut.get();        // get result of async function. Wait if needed.
 ```
