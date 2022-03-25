@@ -381,6 +381,8 @@ s1.substr(m, n);          // Substring of size n starting at s1[m]
 s1.c_str();               // Convert to const char*
 s1 = to_string(12.05);    // Converts number to string
 getline(cin, s);          // Read line ending in '\n'
+s.size();                 // Get size of string
+s.empty();                // Check if string is empty
 
 // ## `vector` (Variable sized array/stack with built in memory allocation)
 
@@ -452,6 +454,7 @@ s.insert(123);            // Add element to set
 if (s.find(123) != s.end()) // Search for an element
 s.erase(123);
 cout << s.size();         // Number of elements in set
+s.clear();                // Clear the set
 
 // ## `algorithm` (A collection of 60 algorithms on sequences with iterators)
 

@@ -394,12 +394,13 @@ ofstream f2("filename");    // Open file for writing
 if (f2) f2 << x;            // Write to file
 ```
 
-## `string` (Variable sized character array)
+## `String` (Variable sized character array)
 
 ```cpp
 #include <string>         // Include string (std namespace)
 string s1, s2="hello";    // Create strings
 s1.size(), s2.size();     // Number of characters: 0, 5
+s1.push_back();          // This is similar as an vector
 s1 += s2 + ' ' + "world"; // Concatenation
 s1 == "hello world"       // Comparison, also <, >, !=, etc.
 s1[0];                    // 'h'
@@ -418,6 +419,8 @@ vector<int> a(10);        // a[0]..a[9] are int (default size is 0)
 vector<int> b{1,2,3};        // Create vector with values 1,2,3
 a.size();                 // Number of elements (10)
 a.push_back(3);           // Increase size to 11, a[10]=3
+a.insert(a.begin(), 0)     // Performs a push_front for vector
+a.insert(a.begin() + i, 0) // Insert at ith position
 a.back()=4;               // a[10]=4;
 a.pop_back();             // Decrease size by 1
 a.front();                // a[0];
@@ -433,9 +436,27 @@ T d[10]; vector<T> e(d, d+10);      // e is initialized from d
 auto it = max_element(std::begin(cloud), std::end(cloud)); // C++11
                           // Get the max element in vector
 vector<vector<int>> answer(r, vector<int> (c,0)); // Init 2D array
+localAns.insert(localAns.end(),{nums[j], twoSum - nums[j]}); 
+                         // Insert an array at the end
 ```
 
-## `deque` (Array stack queue)
+##  `list`
+```cpp
+push_back
+insert
+pop_back
+// Does not support random access
+
+```
+
+## `initialization_list`
+#include <algorithm>    // std::min
+```cpp
+   minVal  =  min({2,3,-1,1});
+   maxVal  =  max({2,3,-1,1});
+```
+
+## `deque` (Array stack queue, double ended queue)
 
 `deque<T>` is like `vector<T>`, but also supports:
 
@@ -443,6 +464,8 @@ vector<vector<int>> answer(r, vector<int> (c,0)); // Init 2D array
 #include <deque>          // Include deque (std namespace)
 a.push_front(x);          // Puts x at a[0], shifts elements toward back
 a.pop_front();            // Removes a[0], shifts toward front
+a.push_back(x);           // push x back to queue
+a.pop_back();             // Remove back from queue
 ```
 ## `queue`
 
@@ -522,6 +545,7 @@ cout << s.size();         // Number of elements in set
 ```cpp
 #include <unordered_set>  // Include set (std namespace)
 unordered_set<int> s;     // Set of integers
+unordered_set<int> m(nums1.begin(), nums1.end()); // Create from vector
 s.insert(123);            // Add element to set
 if (s.find(123) != s.end()) // Search for an element
     s.erase(123);
@@ -608,3 +632,24 @@ future<int> fut =         // result of async function
 // do some other work
 cout << fut.get();        // get result of async function. Wait if needed.
 ```
+
+## `Linked Lists`
+* dummyNode is a very good thing
+* Recersion could make things easier
+* Make sure there is no NULL pointer dereference
+* While recusing, make sure the cur = cur->next is at the end;
+
+## `Binary Trees`
+* Always think about using the easier recursion
+* Preorder, inorder and postorder traversal !!
+
+## `Strings`
+* 'a'  -> 0x61
+  'z'  -> 0x7A
+  'A'  -> 0x41
+  'Z'  -> 0x5a
+  '\0' -> 0x0
+  '0'  -> 0x30
+  '9'  -> 0x39
+  isalnum(x)  // This will check if the char is alphabet or numeric
+  tolower(x)  // This will convert x to lower if possible
